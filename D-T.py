@@ -29,17 +29,9 @@ m=tree.DecisionTreeClassifier()
 m.fit(n,t)
 
 print(m.score(n,t))
-
 print(m.predict([[2,1,0]]))
-
-print(m.predict([[2,0,1]]))
-
-print(m.predict([[1,1,0]]))
-
-print(m.predict([[0,1,1]]))
-
-print(m.predict([[2,2,1]]))
-
-print(m.predict([[0,0,1]]))
-
 print(m.predict([[1,1,1]]))
+print(m.predict([[0,0,0]]))
+print(m.predict([[0,1,0]]))
+print(m.predict([[1,1,0]]))
+print(m.predict([[2,2,2]]))
