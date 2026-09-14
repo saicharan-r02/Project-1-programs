@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataVoyager — Executive E-Commerce & Supply Chain Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090d16;
+            --card: rgba(17, 24, 39, 0.9);
+            --border: rgba(55, 65, 81, 0.5);
+            --accent: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --text: #f9fafb;
+            --text-sub: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #111827 0%, #030712 100%);
+            color: var(--text);
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #38bdf8);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .kpi-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            backdrop-filter: blur(10px);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            text-transform: uppercase;
+        }
+
+        .kpi-val {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 8px 0;
+            color: #fff;
+        }
+
+        .kpi-sub {
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 30px;
+        }
+
+        .sec-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #f3f4f6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(31, 41, 55, 0.7);
+            color: var(--text-sub);
+            padding: 12px 14px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #d1d5db;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+            gap: 24px;
+        }
+
+        .chart-card {
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .chart-card h4 {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #93c5fd;
+        }
+
+        .chart-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 13px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>DataVoyager — Global Retail & Supply Chain Intelligence</h1>
+                <p style="color: var(--text-sub); font-size: 14px; margin-top: 4px;">NumPy Vectorized Analytics, RFM
+                    Segmentation & Cohort Performance</p>
+            </div>
+            <div class="badge">Active Analytics Pipeline</div>
+        </header>
+
+        <!-- KPI Metrics -->
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <div class="kpi-label">Total Net Revenue</div>
+                <div class="kpi-val">$3,283,389.70</div>
+                <div class="kpi-sub">Across 15,000 Transactions</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Total Gross Profit</div>
+                <div class="kpi-val">$1,742,222.70</div>
+                <div class="kpi-sub">Margin: 53.1%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Active Customer Base</div>
+                <div class="kpi-val">1,633</div>
+                <div class="kpi-sub">Avg Order Value: $229.80</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Return Rate</div>
+                <div class="kpi-val">4.75%</div>
+                <div class="kpi-sub">Industry Benchmark: &lt; 6.0%</div>
+            </div>
+        </div>
+
+        <!-- RFM Segmentation Table -->
+        <div class="section">
+            <div class="sec-title">👥 RFM Customer Segmentation & Spend Analysis</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer Tier</th>
+                        <th>Cohort Size</th>
+                        <th>Net Revenue</th>
+                        <th>Rev Share</th>
+                        <th>Avg Recency</th>
+                        <th>Avg Frequency</th>
+                        <th>Avg Spend</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td><strong>Champions</strong></td>
+                        <td>430</td>
+                        <td>$2,078,367.60</td>
+                        <td><strong>63.3%</strong></td>
+                        <td>23.6 days</td>
+                        <td>20.8</td>
+                        <td>$4,833.41</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Loyal Customers</strong></td>
+                        <td>353</td>
+                        <td>$644,975.65</td>
+                        <td><strong>19.64%</strong></td>
+                        <td>68.4 days</td>
+                        <td>8.2</td>
+                        <td>$1,827.13</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>At Risk</strong></td>
+                        <td>191</td>
+                        <td>$293,548.35</td>
+                        <td><strong>8.94%</strong></td>
+                        <td>216.9 days</td>
+                        <td>6.7</td>
+                        <td>$1,536.90</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Hibernating / Lost</strong></td>
+                        <td>523</td>
+                        <td>$174,272.50</td>
+                        <td><strong>5.31%</strong></td>
+                        <td>322.2 days</td>
+                        <td>1.7</td>
+                        <td>$333.22</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>New / Promising</strong></td>
+                        <td>85</td>
+                        <td>$46,399.10</td>
+                        <td><strong>1.41%</strong></td>
+                        <td>29.6 days</td>
+                        <td>2.3</td>
+                        <td>$545.87</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>High-Value Sleepers</strong></td>
+                        <td>41</td>
+                        <td>$45,826.50</td>
+                        <td><strong>1.4%</strong></td>
+                        <td>320.7 days</td>
+                        <td>2.5</td>
+                        <td>$1,117.72</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Visual Analytics Grid -->
+        <div class="section">
+            <div class="sec-title">📈 Analytics Charts & Performance Visuals</div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h4>Monthly Revenue & Profit Dynamics</h4>
+                    <img src="charts/monthly_sales_trend.png" alt="Sales Trend">
+                </div>
+                <div class="chart-card">
+                    <h4>Monthly Customer Retention Cohort Matrix</h4>
+                    <img src="charts/cohort_retention_heatmap.png" alt="Cohort Heatmap">
+                </div>
+                <div class="chart-card">
+                    <h4>Revenue Distribution Across RFM Segments</h4>
+                    <img src="charts/rfm_customer_distribution.png" alt="RFM Distribution">
+                </div>
+                <div class="chart-card">
+                    <h4>Product Category Basket Co-Occurrence Affinity</h4>
+                    <img src="charts/product_affinity_heatmap.png" alt="Affinity Heatmap">
+                </div>
+            </div>
+        </div>
+
+        <!-- Supply Chain KPIs -->
+        <div class="section">
+            <div class="sec-title">📦 Supply Chain, Inventory Turnover & Reorder Point Optimization</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Product</th>
+                        <th>Units Sold</th>
+                        <th>Turnover (ITR)</th>
+                        <th>DSI (Days)</th>
+                        <th>GMROI</th>
+                        <th>Safety Stock</th>
+                        <th>Reorder Point (ROP)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>Health & Beauty</td>
+                        <td><strong>Advanced Anti-Aging Peptide Serum</strong></td>
+                        <td>2,027</td>
+                        <td>29.16x</td>
+                        <td>12.5d</td>
+                        <td><strong>64.5</strong></td>
+                        <td>11 units</td>
+                        <td>19 units</td>
+                    </tr>
+
+                    <tr>
+                        <td>Apparel</td>
+                        <td><strong>Organic Cotton Hoodie</strong></td>
+                        <td>2,139</td>
+                        <td>29.12x</td>
+                        <td>12.5d</td>
+                        <td><strong>53.96</strong></td>
+                        <td>10 units</td>
+                        <td>19 units</td>
+                    </tr>
+
+                    <tr>
+                        <td>Health & Beauty</td>
+                        <td><strong>Sonic Electric Toothbrush</strong></td>
+                        <td>2,106</td>
+                        <td>29.16x</td>
+                        <td>12.5d</td>
+                        <td><strong>51.74</strong></td>
+                        <td>10 units</td>
+                        <td>19 units</td>
+                    </tr>
+
+                    <tr>
+                        <td>Apparel</td>
+                        <td><strong>Merino Wool Thermal Jacket</strong></td>
+                        <td>2,209</td>
+                        <td>29.04x</td>
+                        <td>12.6d</td>
+                        <td><strong>45.45</strong></td>
+                        <td>11 units</td>
+                        <td>20 units</td>
+                    </tr>
+
+                    <tr>
+                        <td>Apparel</td>
+                        <td><strong>Performance Running Shoes</strong></td>
+                        <td>2,013</td>
+                        <td>29.12x</td>
+                        <td>12.5d</td>
+                        <td><strong>45.17</strong></td>
+                        <td>10 units</td>
+                        <td>19 units</td>
+                    </tr>
+
+                    <tr>
+                        <td>Home & Kitchen</td>
+                        <td><strong>Cast Iron Dutch Oven 6Qt</strong></td>
+                        <td>2,139</td>
+                        <td>29.16x</td>
+                        <td>12.5d</td>
+                        <td><strong>42.09</strong></td>
+                        <td>11 units</td>
+                        <td>20 units</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sports & Outdoors</td>
+                        <td><strong>Ultralight Camping Tent 2-Person</strong></td>
+                        <td>2,100</td>
+                        <td>29.16x</td>
+                        <td>12.5d</td>
+                        <td><strong>36.84</strong></td>
+                        <td>10 units</td>
+                        <td>19 units</td>
+                    </tr>
+
+                    <tr>
+                        <td>Electronics</td>
+                        <td><strong>Mechanical Gaming Keyboard</strong></td>
+                        <td>2,118</td>
+                        <td>29.16x</td>
+                        <td>12.5d</td>
+                        <td><strong>34.9</strong></td>
+                        <td>11 units</td>
+                        <td>19 units</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            DataVoyager Analytics Pipeline • Production Ready • Automated Execution
+        </footer>
+    </div>
+</body>
+
+</html>
