@@ -6,85 +6,78 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 
-REPORTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "reports")
-CHARTS_DIR = os.path.join(REPORTS_DIR, "charts")
+REPORTS_DIR=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"reports")
+CHARTS_DIR=os.path.join(REPORTS_DIR,"charts")
 
-def generate_visual_charts(df, rfm_summary, retention_matrix, affinity_matrix):
+def generate_visual_charts(df,rfm_summary,retention_matrix,affinity_matrix):
     """
     Generates high-resolution analytics figures.
     """
-    os.makedirs(CHARTS_DIR, exist_ok=True)
-    sns.set_theme(style="whitegrid", palette="muted")
-    plt.rcParams.update({"font.sans-serif": "Arial", "figure.dpi": 300})
+    os.makedirs(CHARTS_DIR,exist_ok=True)
+    sns.set_theme(style="whitegrid",palette="muted")
+    plt.rcParams.update({"font.sans-serif":"Arial","figure.dpi":300})
 
-    # 1. Monthly Revenue & Profit Trend
-    monthly = df.groupby(df["order_date"].dt.to_period("M")).agg(
-        Net_Revenue=("net_revenue", "sum"),
-        Gross_Profit=("gross_profit", "sum")
+    monthly=df.groupby(df["order_date"].dt.to_period("M")).agg(
+        Net_Revenue=("net_revenue","sum"),
+        Gross_Profit=("gross_profit","sum")
     ).reset_index()
-    monthly["order_month_str"] = monthly["order_date"].astype(str)
+    monthly["order_month_str"]=monthly["order_date"].astype(str)
 
-    plt.figure(figsize=(12, 5.5))
-    plt.plot(monthly["order_month_str"], monthly["Net_Revenue"] / 1000, marker="o", color="#2563eb", lw=2.5, label="Net Revenue ($k)")
-    plt.plot(monthly["order_month_str"], monthly["Gross_Profit"] / 1000, marker="s", color="#10b981", lw=2.2, label="Gross Profit ($k)")
-    plt.xticks(rotation=45, ha="right", fontsize=9)
-    plt.title("Monthly Revenue & Gross Profit Trajectory (24-Month Trend)", fontsize=13, fontweight="bold", pad=12)
-    plt.ylabel("Amount ($ in Thousands)", fontsize=11, fontweight="bold")
+    plt.figure(figsize=(12,5.5))
+    plt.plot(monthly["order_month_str"],monthly["Net_Revenue"]/1000,marker="o",color="#2563eb",lw=2.5,label="Net Revenue ($k)")
+    plt.plot(monthly["order_month_str"],monthly["Gross_Profit"]/1000,marker="s",color="#10b981",lw=2.2,label="Gross Profit ($k)")
+    plt.xticks(rotation=45,ha="right",fontsize=9)
+    plt.title("Monthly Revenue & Gross Profit Trajectory (24-Month Trend)",fontsize=13,fontweight="bold",pad=12)
+    plt.ylabel("Amount ($ in Thousands)",fontsize=11,fontweight="bold")
     plt.legend(frameon=True)
     plt.tight_layout()
-    chart1 = os.path.join(CHARTS_DIR, "monthly_sales_trend.png")
+    chart1=os.path.join(CHARTS_DIR,"monthly_sales_trend.png")
     plt.savefig(chart1, dpi=300)
     plt.close()
     print(f"[OK] Saved Monthly Sales Trend to: {chart1}")
 
-    # 2. Cohort Retention Heatmap
-    plt.figure(figsize=(11, 7))
+    plt.figure(figsize=(11,7))
     sns.heatmap(
-        retention_matrix.iloc[:12, :12],
-        annot=True, fmt=".0f", cmap="YlGnBu", vmin=0, vmax=100,
+        retention_matrix.iloc[:12,:12],
+        annot=True,fmt=".0f",cmap="YlGnBu",vmin=0,vmax=100,
         cbar_kws={"label": "Retention Rate (%)"}
     )
-    plt.title("Monthly Customer Retention Cohort Analysis (%)", fontsize=13, fontweight="bold", pad=12)
-    plt.xlabel("Months Since Acquisition (Cohort Index)", fontsize=11, fontweight="bold")
-    plt.ylabel("Acquisition Cohort", fontsize=11, fontweight="bold")
+    plt.title("Monthly Customer Retention Cohort Analysis (%)",fontsize=13,fontweight="bold",pad=12)
+    plt.xlabel("Months Since Acquisition (Cohort Index)",fontsize=11,fontweight="bold")
+    plt.ylabel("Acquisition Cohort",fontsize=11,fontweight="bold")
     plt.tight_layout()
-    chart2 = os.path.join(CHARTS_DIR, "cohort_retention_heatmap.png")
+    chart2=os.path.join(CHARTS_DIR,"cohort_retention_heatmap.png")
     plt.savefig(chart2, dpi=300)
     plt.close()
     print(f"[OK] Saved Cohort Retention Heatmap to: {chart2}")
 
-    # 3. RFM Customer Segments Breakdown
     plt.figure(figsize=(10, 5))
     barplot = sns.barplot(
-        x="Total_Revenue", y="Segment", data=rfm_summary,
+        x="Total_Revenue", y="Segment",data=rfm_summary,
         palette="viridis"
     )
     for p in barplot.patches:
         barplot.annotate(
             f"${p.get_width()/1000:,.1f}k",
-            (p.get_width() + 1000, p.get_y() + p.get_height() / 2),
-            ha="left", va="center", fontsize=9, fontweight="bold"
+            (p.get_width()+1000,p.get_y()+p.get_height()/2),
+            ha="left",va="center",fontsize=9,fontweight="bold"
         )
-    plt.title("Revenue Contribution by RFM Customer Segment", fontsize=13, fontweight="bold", pad=12)
-    plt.xlabel("Total Net Revenue ($)", fontsize=11, fontweight="bold")
-    plt.ylabel("Customer Segment", fontsize=11, fontweight="bold")
-    plt.xlim(0, rfm_summary["Total_Revenue"].max() * 1.18)
+    plt.title("Revenue Contribution by RFM Customer Segment",fontsize=13,fontweight="bold",pad=12)
+    plt.xlabel("Total Net Revenue ($)",fontsize=11,fontweight="bold")
+    plt.ylabel("Customer Segment",fontsize=11,fontweight="bold")
+    plt.xlim(0,rfm_summary["Total_Revenue"].max()*1.18)
     plt.tight_layout()
-    chart3 = os.path.join(CHARTS_DIR, "rfm_customer_distribution.png")
-    plt.savefig(chart3, dpi=300)
+    chart3=os.path.join(CHARTS_DIR,"rfm_customer_distribution.png")
+    plt.savefig(chart3,dpi=300)
     plt.close()
     print(f"[OK] Saved RFM Customer Distribution to: {chart3}")
 
-    # 4. Product Category Basket Affinity Matrix
-    plt.figure(figsize=(8, 6.5))
-    sns.heatmap(
-        affinity_matrix, annot=True, fmt="d", cmap="magma_r",
-        linewidths=0.5, linecolor="#cbd5e1"
-    )
-    plt.title("Cross-Category Basket Co-Occurrence Affinity Matrix", fontsize=13, fontweight="bold", pad=12)
+    plt.figure(figsize=(8,6.5))
+    sns.heatmap(affinity_matrix,annot=True,fmt="d",cmap="magma_r",linewidths=0.5,linecolor="#cbd5e1")
+    plt.title("Cross-Category Basket Co-Occurrence Affinity Matrix",fontsize=13,fontweight="bold",pad=12)
     plt.tight_layout()
-    chart4 = os.path.join(CHARTS_DIR, "product_affinity_heatmap.png")
-    plt.savefig(chart4, dpi=300)
+    chart4=os.path.join(CHARTS_DIR,"product_affinity_heatmap.png")
+    plt.savefig(chart4,dpi=300)
     plt.close()
     print(f"[OK] Saved Product Affinity Heatmap to: {chart4}")
 
@@ -92,12 +85,12 @@ def generate_executive_html_dashboard(kpis: dict, rfm_summary: pd.DataFrame, sc_
     """
     Builds a complete interactive executive sales & supply chain dashboard in HTML.
     """
-    os.makedirs(REPORTS_DIR, exist_ok=True)
-    report_file = os.path.join(REPORTS_DIR, "executive_sales_dashboard.html")
+    os.makedirs(REPORTS_DIR,exist_ok=True)
+    report_file=os.path.join(REPORTS_DIR,"executive_sales_dashboard.html")
 
-    rfm_rows = ""
+    rfm_rows=""
     for _, row in rfm_summary.iterrows():
-        rfm_rows += f"""
+        rfm_rows+=f"""
         <tr>
             <td><strong>{row['Segment']}</strong></td>
             <td>{row['Customer_Count']:,}</td>
@@ -109,9 +102,9 @@ def generate_executive_html_dashboard(kpis: dict, rfm_summary: pd.DataFrame, sc_
         </tr>
         """
 
-    sc_rows = ""
+    sc_rows=""
     for _, row in sc_summary.head(8).iterrows():
-        sc_rows += f"""
+        sc_rows+=f"""
         <tr>
             <td>{row['Category']}</td>
             <td><strong>{row['Product_Name']}</strong></td>
@@ -124,7 +117,7 @@ def generate_executive_html_dashboard(kpis: dict, rfm_summary: pd.DataFrame, sc_
         </tr>
         """
 
-    html = f"""<!DOCTYPE html>
+    html=f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -330,7 +323,7 @@ def generate_executive_html_dashboard(kpis: dict, rfm_summary: pd.DataFrame, sc_
 </body>
 </html>
 """
-    with open(report_file, "w", encoding="utf-8") as f:
+    with open(report_file,"w",encoding="utf-8") as f:
         f.write(html)
 
     print(f"[OK] Interactive Executive Dashboard compiled at: {report_file}")
