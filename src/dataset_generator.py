@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime,timedelta
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 DATA_FILE = os.path.join(DATA_DIR, "retail_transactions.csv")
@@ -16,20 +16,19 @@ def generate_retail_dataset(n_records: int = 15000, random_state: int = 42) -> p
     np.random.seed(random_state)
     os.makedirs(DATA_DIR, exist_ok=True)
 
-    n_customers = 2500
-    customer_pool = [f"CUST-{1000 + i}" for i in range(n_customers)]
-    customer_ids = np.random.choice(customer_pool, size=n_records, p=np.random.dirichlet(np.ones(n_customers) * 0.4))
+    n_customers=2500
+    customer_pool=[f"CUST-{1000 + i}" for i in range(n_customers)]
+    customer_ids=np.random.choice(customer_pool, size=n_records, p=np.random.dirichlet(np.ones(n_customers) * 0.4))
 
-    # Dates spanning 24 months
-    start_date = datetime(2024, 1, 1)
-    date_offsets = np.random.randint(0, 730, size=n_records)
-    order_dates = [start_date + timedelta(days=int(d)) for d in date_offsets]
+    start_date=datetime(2024, 1, 1)
+    date_offsets=np.random.randint(0, 730, size=n_records)
+    order_dates=[start_date + timedelta(days=int(d)) for d in date_offsets]
 
-    regions = ["North America", "Europe", "Asia Pacific", "Latin America", "Middle East"]
-    region_probs = [0.40, 0.28, 0.18, 0.08, 0.06]
-    selected_regions = np.random.choice(regions, size=n_records, p=region_probs)
+    regions=["North America","Europe","Asia Pacific","Latin America","Middle East"]
+    region_probs=[0.40,0.28,0.18,0.08,0.06]
+    selected_regions=np.random.choice(regions,size=n_records,p=region_probs)
 
-    catalog = [
+    catalog=[
         {"category": "Electronics", "name": "UltraHD 4K Monitor", "cost": 180.0, "base_price": 320.0},
         {"category": "Electronics", "name": "Wireless Noise-Cancelling Headphones", "cost": 65.0, "base_price": 149.0},
         {"category": "Electronics", "name": "Mechanical Gaming Keyboard", "cost": 38.0, "base_price": 89.0},
@@ -45,17 +44,15 @@ def generate_retail_dataset(n_records: int = 15000, random_state: int = 42) -> p
         {"category": "Sports & Outdoors", "name": "Adjustable Dumbbell Set 50lbs", "cost": 95.0, "base_price": 210.0}
     ]
 
-    item_indices = np.random.randint(0, len(catalog), size=n_records)
-    categories = [catalog[i]["category"] for i in item_indices]
-    product_names = [catalog[i]["name"] for i in item_indices]
-    unit_costs = np.array([catalog[i]["cost"] for i in item_indices])
-    unit_prices = np.array([catalog[i]["base_price"] for i in item_indices])
+    item_indices=np.random.randint(0, len(catalog), size=n_records)
+    categories=[catalog[i]["category"] for i in item_indices]
+    product_names=[catalog[i]["name"] for i in item_indices]
+    unit_costs=np.array([catalog[i]["cost"] for i in item_indices])
+    unit_prices=np.array([catalog[i]["base_price"] for i in item_indices])
 
-    # Quantities: Poisson distribution skewed towards 1-3 items
-    quantities = np.random.poisson(1.6, size=n_records).clip(1, 10)
+    quantities=np.random.poisson(1.6,size=n_records).clip(1,10)
 
-    # Discounts: 0%, 5%, 10%, 15%, 20%, 25%
-    discount_rates = np.random.choice([0.0, 0.05, 0.10, 0.15, 0.20, 0.25], size=n_records, p=[0.45, 0.20, 0.15, 0.10, 0.06, 0.04])
+    discount_rates=np.random.choice([0.0,0.05,0.10,0.15,0.20,0.25],size=n_records,p=[0.45,0.20,0.15,0.10,0.06,0.04])
 
     gross_revenue = unit_prices * quantities
     discount_amount = gross_revenue * discount_rates
